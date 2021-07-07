@@ -1,0 +1,160 @@
+*Git使用笔记：
+一、Git的基本概念
+1、Repository（仓库）：存放我们项目代码的地方，每个项目对应一个仓库。
+2、Star(收藏)
+3、Fork（复制项目）：将项目复制到自己的GitHub上。如果修改了其中的代码，可以向原作者提交，如果原作者同意了我们的提交，则完成了对项目的贡献。
+4、Pull Request（发起提交请求）
+5、Watch（关注）：当关注的项目发生版本变化时会接收到通知。
+6、Issue（讨论）：发起问题讨论。
+二、Git的工作流程
+1、远程仓库
+2、本地仓库
+3、工作区
+4、暂存区
+三、Git常用的命令
+1、git status: 查看Git工作区的状态
+2、git diff < filename >: 查看更改的内容
+3、git add < filename >: 将文件放入缓存区中
+4、git commit -m '注释' < filename >: 将文件提交到本地仓库
+5、git push: 将本地仓库的文件推送到远程仓库
+6、git pull: 将远程仓库的更新拉取到本地仓库
+7、git log: 查看提交(git commit)的日志
+8、git reflog: 查看所有的操作日志
+9、git reset --hard < commit id >: 回退到指定的commit版本下(commit id在log中查看)
+10、git checkout --< filename >: 撤销未提交到缓存区的修改
+11、git reset HEAD --< filename >: 撤销已提交到缓存区的修改
+四、Git的配置
+1、Git配置用户信息
+4.1.1、提交用户名、邮箱、密码
+2、创建git的代码仓库
+4.2.1、登录github 选择setting
+4.2.2、登录github 新建一个仓库 它会告诉我们可以远程链接一个仓库 也可以从这个仓库
+克隆出新的仓库
+4.2.3、连接完成，将本地仓库的东西推送上去：git push -u origin master
+4.2.4、由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+从现在开始，本地提交就可以使用命令：git push origin master
+4.2.5、当你第一次使用Git的clone或者push命令连接GitHub时，会得到一个SSH警告，然后输入yes即可
+4.2.6、或者可克隆
+五、分支
+1、创建分支
+5.1.1、git checkout -b lcw 创建分支 lcw
+5.1.2、git branch 查看当前分支
+5.1.3、git checkout 切换分支
+2、合并分支
+5.2.1、git merge lcw 命令用于合并指定分支到当前分支
+5.2.2、git branch -d lcw 删除分支
+5.2.3、查看分支:git branch
+5.2.4、创建分支:git branch <name>
+5.2.5、切换分支:git checkout <name>
+5.2.6、创建+切换分支:git checkout -b <name>
+5.2.7、合并某分支到当前分支:git merge <name>
+5.2.8、删除分支:git branch -d <name>
+六、部分提交
+比如为了fix 2个bug 修改同一个文件，但想分开提交。可以使用交互式 add：
+git add -p [file_name] 根据提示进行选择（这里选择s对要提交的内容进行分割）：
+输入 y 暂存块
+输入 n 不暂存块
+输入 e 手动编辑块
+输入 d 退出或者跳转到下一个文件
+输入 s 分割块
+七、合并提交
+git rebase -i HEAD~2
+八、储藏
+*Spring 、SpringMVC 、Mybatis 知识点总结：
+一、Sping：
+1、Sping的含义
+1.1.1、Spring 在不同的场景中表示不同的含义。早期的时候它被用来指代Spring Framework项目本身，这也是它一开始的含义。随着时间的推移，在Spring Framework之上建立了其他Spring项目，比如SpringSecurity、SpringBoot、SpringCloud。大部分情况下，当人们聊到Spring时，他们所说的 Spring 是 Spring 整个家族。
+1.1.2、Spring 是一个轻量级的开源框架，是为解决企业应用开发的复杂性而创建的。而在我的理解中，Spring 的主要就解决了两件事情（当然它还解决了数据访问、远程调用、单元测试等问题），分别对应 Spring 的两个设计思想 IOC 和 AOP：
+IOC 容器（解耦合）：解决各种 new 对象的问题
+AOP （切面编程）：把非业务范畴的功能，提取成一个切面，统一实现
+2、事务的7种传播级别
+事务的传播级别定义的是事务的控制范围。对一个类配置声明式事务，该类的所有public方法都会使用此事务，也就是说该方法的执行要嘛成功提交，要嘛回滚失败。
+1.2.1、Request：默认的事务传播级别。如果有事务了就加入到此事务，如果没有则新建。
+1.2.2、Supports：如果有事务了就加入到此事务，如果没有采用非事务执行。
+1.2.3、Mandatory：强制。必须要有事务才能执行，没有就报错。
+1.2.4、Require_now：每次都会新建一个事务，并且挂起上下文的事务，等这个执行完了再执行。
+1.2.5、Not_supports：上下文存在事务则挂起，执行当前代码，执行完了接着执行事务。
+1.2.6、Never：上下文不能存在事务，有就报错。
+1.2.7、Nested：嵌套事务。上下文存在事务则嵌套子事务执行，不存在新建事务。
+3、Spring事务管理的两种方式
+1.3.1、编程式事务管理。通常使用TransactionTemplete或PlatformTransactionManager，编程式事务管理回造成代码侵入，但更灵活。
+1.3.2、声明式事务管理。基于AOP实现，有XML配置和注解@Transactional两种方式。对一个类配置声明式事务，该类的所有public方法都会使用此事务，也就是说该方法的执行要嘛成功提交，要嘛回滚失败。
+4、Spring常见注解：
+1.4.1、@Autowired和@Inject、@Resource，可以与@Qualifier或者@Name配合使用，防止多实例注入时出错，以及值注入@Value。
+1.4.2、@Scope 声明 Spring Bean 的作用域 ，四种常见的 Spring Bean 的作用域：
+singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。
+prototype : 每次请求都会创建一个新的 bean 实例。
+request : 每一次 HTTP 请求都会产生一个新的 bean，该 bean 仅在当前 HTTP request 内有效。
+session : 每一次 HTTP 请求都会产生一个新的 bean，该 bean 仅在当前 HTTP session 内有效。
+1.4.3、@component，而其余 @Controller、@Service、@Repository都组合了@component注解，主要为便于使用者Class组件进行归类。默认加载IOC容器中的组件，容器启动会调用无参构造器创建对象，再进行初始化赋值等操作
+1.4.4、一般用来声明配置类，可以使用 @Component注解替代，不过使用Configuration注解声明配置类更加语义化。 主要区别在于Configuration在Spring加载的时候，会被CGLib代理，里面的@Bean不会出现重复实例化
+二、SpringMVC：
+1、SpringMVC含义
+SpringMVC 本质上还是在使用Servlet处理，并在其基础上进行了封装简化了开发流程，提高易用性、并使用程序逻辑结构变得更清晰
+2、Spring MVC的请求流程：
+2.2.1、发起请求到前端控制器(DispatcherServlet)
+2.2.2、前端控制器请求HandlerMapping查找Handler可以根据xml配置、注解进行查找
+2.2.3、处理器映射器HandlerMapping向前端控制器返回Handler
+2.2.4、前端控制器调用处理器适配器去执行Handler
+2.2.5、处理器适配器去执行Handler
+2.2.6、Handler执行完成给适配器返回ModelAndView
+2.2.7、处理器适配器向前端控制器返回ModelAndView。ModelAndView是springmvc框架的一个底层对象，包括 Model和view
+2.2.8、前端控制器请求视图解析器去进行视图解析，根据逻辑视图名解析成真正的视图(jsp)
+2.2.9、视图解析器向前端控制器返回View
+2.2.10、前端控制器进行视图渲染。视图渲染将模型数据(在ModelAndView对象中)填充到request域
+2.2.11、前端控制器向用户响应结果
+3、SpringMvc的参数绑定(从请求中接收参数)
+2.3.1、默认类型：在controller方法中可以有也可以没有,看自己需求随意添加。包括request，response，session，Model
+2.3.2、基本类型和String：double，float，integer，long，boolean，String
+2.3.3、pojo类型：页面上input框的name属性值必须要等于pojo的属性名称
+2.3.4、vo类型:页面上input框的name属性值必须要等于vo中的属性.属性.属性....
+2.3.5、自定义转换器converter：作用:由于springMvc无法将string自动转换成date所以需要自己手动编写类型转换器。需要编写一个类实现Converter接口在springMvc.xml中配置自定义转换器，在springMvc.xml中将自定义转换器配置到注解驱动上
+4、SpringMVC常见注解
+2.4.1、@RequestMapping 处理常见的 HTTP 请求类型
+5 种常见的请求类型:
+GET ：请求从服务器获取特定资源。举个例子：GET /users（获取所有用户）
+POST ：在服务器上创建一个新的资源。举个例子：POST /users（创建用户）
+PUT ：更新服务器上的资源（客户端提供更新后的整个资源）。举个例子：PUT /users/12（更新编号为 12 的用户）
+DELETE ：从服务器删除特定的资源。举个例子：DELETE /users/12（删除编号为 12 的用户）
+PATCH ：更新服务器上的资源（客户端提供更改的属性，可以看做作是部分更新），使用的比较少。
+2.4.2、前后端传值：@PathVariable用于获取路径参数，@RequestParam用于获取查询参数。
+2.4.3、@RequestBody 注解的作用是将controller的方法返回的对象通过适当的转换器转换为指定的格式之后，写入到response对象的body区，通常用来返回JSON数据或者是XML数据，常见于前后端分离项目。
+2.4.4、@RestController注解是@Controller和@ResponseBody的合集,表示这是个控制器 bean,并且是将函数的返回值直 接填入 HTTP 响应体中,是 REST 风格的控制器。
+三、Mybatis：
+1、Mybatis含义
+MyBatis 的前身是 iBatis，iBatis是 Apache 软件基金会下的一个开源项目。2010 年该项目从Apache 基金会迁出，并改名为MyBatis。同期，iBatis停止维护。 MyBatis是一种半自动化的Java持久层框架，其通过注解或XML 的方式将对象和SQL 关联起来。之所以说它是半自动的，是因为和Hibernate 等一些可自动生成SQL的ORM框架相比，使用MyBatis需要用户自行维护SQL，维护SQL 的工作比较繁琐，但也有好处。比如我们可控制SQL逻辑，可对其进行优化，以提高效率。
+2、Mybatis工作原理
+3.2.1、Mybatis通过配置文件（sqlMapConfig核心配置文件和mapper文件）创建sqlSessionFactory对象。
+3.2.2、sqlSessionFactory创建sqlSession对象，sqlSession对象包含了执行sql语句的方法，但真正执行数据库操作的是MappedStatement和Executor执行器。
+3.2.3、Executor执行器。是mybatis底层实现的数据库操作接口，有基本执行器和缓存执行器两个实现类。
+3.2.4、MappedStatement也是mybatis的底层封装。Mapper.xml中一个sql对应一个mappedStatement对象，sql的id就是mappedStatement的id，sql输入参数：Executor通过Mapped Statement在执行sql前将输入的java对象映射至sql中，输入参数映射就是jdbc编程中对preparedStatement设置参数；输出参数：Executor通过Mapped Statement在执行sql后将输出结果映射至java对象中，输出结果映射过程相当于jdbc编程中对结果的解析处理过程。
+3、MyBatis配置XML文件的层次结构
+<configuration> <!--配置 -->
+    <properties/> <!--属性-->
+    <settings/> <!--设置-->
+    <typeAliases/> <!--类型命名-->
+    <typeHandlers/> <!--类型处理器-->
+    <objectFactory/> <!--对象工厂-->
+    <plugins/> <!--插件-->
+    <environments> <!--配置环境-->
+        <environment> <!--环境变量 -->
+            <transactionManager/> <!--事务管理器-->
+            <dataSource/> <!-- 数据源-->
+        </environment>
+    </environments>
+    <databaseIdProvider/> <!--数据库厂商标识-->
+    <mappers/> <!--映射器-->
+</configuration><!--配置 -->
+4、MyBatis的映射器
+常见元素：
+sclect：查询语句，最常用、最复杂的元素之一
+insert：插入语句
+update：更新语句
+delete：删除语句
+parameterMap：定义参数映射关系
+sql：允许定义一部分的SQL,然后在各个地方引用它
+resultMap：用来描述从数据库结果集中来加载对象,它是最复杂、最强大的元素
+cache：给定命名空间的缓存配置
+cache-ref：其他命名空间缓存配置的引用
+5、Mybatis的优点
+传统JDBC的数据库操作存在sql语句在代码中硬编码，不易维护扩展和创建连接对象，加载驱动等操作增加系统开销并降低开发效率这两个问题。Mybatis是对JDBC的封装，使得开发只需要专注sql本身，不需要花精力去处理驱动加载、创建连接对象等操作。
